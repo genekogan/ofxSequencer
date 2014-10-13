@@ -67,6 +67,7 @@ void ofxSequencer::stop() {
 //-------
 void ofxSequencer::reset() {
     bpm.reset();
+    column = 0;
 }
 
 //-------

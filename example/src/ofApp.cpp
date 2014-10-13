@@ -3,15 +3,22 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    // setup the sequencer with 6 rows, 8 columns, at 120 bpm (4 beats per bar)
+    // setup the sequencer with 6 rows, 8 columns
     sequencer.setup(6, 8);
+    
+    // set to 120 bpm (4 beats per bar)
     sequencer.setBpm(120, 4);
+    
+    // set for continuous values (default is continuous)
+    sequencer.setDiscrete(false);
     
     // where to draw it on the screen
     sequencer.setPosition(100, 100, 500, 200);
     
-    // event listener
+    // event notifier
     sequencer.addBeatListener(this, &ofApp::sequencerStep);
+    
+    // start the sequencer
     sequencer.start();
     
     // set values

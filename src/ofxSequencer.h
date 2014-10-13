@@ -7,9 +7,10 @@
 class ofxSequencer
 {
 public:
-    void setup(int rows, int cols, int beatsPerMinute=120, int beatsPerBar=4);
+    void setup(int rows, int cols, bool discrete=false, int beatsPerMinute=120, int beatsPerBar=4);
     void setSize(int rows, int cols);
     void setBpm(int beatsPerMinute, int beatsPerBar=4);
+    void setDiscrete(bool discrete);
     
     void start();
     void stop();
@@ -48,6 +49,7 @@ private:
     vector<vector<float> > value;
     int column;
     ofxBpm bpm;
+    bool discrete;
     
     int rows, cols;
     int x, y, width, height;

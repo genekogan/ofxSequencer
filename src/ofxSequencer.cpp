@@ -1,12 +1,30 @@
 #include "ofxSequencer.h"
 
 //-------
-void ofxSequencer::setup(int rows, int cols, int beatsPerMinute, int beatsPerBar) {
+void ofxSequencer::setup(int rows, int cols, bool discrete, int beatsPerMinute, int beatsPerBar) {
     setSize(rows, cols);
     setBpm(beatsPerMinute, beatsPerBar);
+    setDiscrete(discrete);
     ofAddListener(bpm.beatEvent, this, &ofxSequencer::play);
     setVisible(true);
     setPosition(0, 0, 120, 40);
+}
+
+//-------
+void ofxSequencer::setDiscrete(bool discrete) {
+    this->discrete = discrete;
+    if (discrete) {
+        for (int r=0; r<rows; r++) {
+            for (int c=0; c<cols; c++) {
+                if (value[c][r] > 0.5) {
+                    value[c][r] = 1.0;
+                }
+                else {
+                    value[c][r] = 0.0;
+                }
+            }
+        }
+    }
 }
 
 //-------
@@ -47,7 +65,7 @@ void ofxSequencer::setSize(int rows, int cols) {
 
 //-------
 void ofxSequencer::setValue(int row, int col, float val) {
-    value[col][row] = val;
+    value[col][row] = discrete ? (val > 0.0) : val;
     redraw();
 }
 
@@ -143,6 +161,7 @@ void ofxSequencer::mousePressed(ofMouseEventArgs &evt){
 
 //-------
 void ofxSequencer::mouseDragged(ofMouseEventArgs &evt){
+    if (discrete)   return;
     if (draggingCell) {
         value[activeCell.x][activeCell.y] = ofClamp(value[activeCell.x][activeCell.y] - 0.005*(evt.y-mousePos.y), 0.0, 1.0);
         mousePos.set(evt.x, evt.y);
@@ -154,11 +173,16 @@ void ofxSequencer::mouseDragged(ofMouseEventArgs &evt){
 //-------
 void ofxSequencer::mouseReleased(ofMouseEventArgs &evt){
     if (draggingCell && draggingFrames==0) {
-        if (value[activeCell.x][activeCell.y] > 0.5) {
-            value[activeCell.x][activeCell.y] = 0.0;
+        if (discrete ) {
+            value[activeCell.x][activeCell.y] = 1.0 - value[activeCell.x][activeCell.y];
         }
         else {
-            value[activeCell.x][activeCell.y] = 1.0;
+            if (value[activeCell.x][activeCell.y] > 0.5) {
+                value[activeCell.x][activeCell.y] = 0.0;
+            }
+            else {
+                value[activeCell.x][activeCell.y] = 1.0;
+            }
         }
     }
     else {

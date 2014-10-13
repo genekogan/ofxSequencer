@@ -7,6 +7,8 @@
 class ofxSequencer
 {
 public:
+    ~ofxSequencer();
+    
     void setup(int rows, int cols, bool discrete=false, int beatsPerMinute=120, int beatsPerBar=4);
     void setSize(int rows, int cols);
     void setBpm(int beatsPerMinute, int beatsPerBar=4);

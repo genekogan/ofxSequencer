@@ -5,7 +5,6 @@ void ofxSequencer::setup(int rows, int cols, bool discrete, int beatsPerMinute, 
     setSize(rows, cols);
     setBpm(beatsPerMinute, beatsPerBar);
     setDiscrete(discrete);
-    ofAddListener(bpm.beatEvent, this, &ofxSequencer::play);
     setVisible(true);
     setPosition(0, 0, 120, 40);
 }
@@ -35,11 +34,13 @@ void ofxSequencer::setBpm(int beatsPerMinute, int beatsPerBar) {
 
 //-------
 void ofxSequencer::start() {
+    ofAddListener(bpm.beatEvent, this, &ofxSequencer::play);
     bpm.start();
 }
 
 //-------
 void ofxSequencer::stop() {
+    ofRemoveListener(bpm.beatEvent, this, &ofxSequencer::play);
     bpm.stop();
 }
 
@@ -233,3 +234,8 @@ void ofxSequencer::redraw() {
     fbo.end();
 }
 
+//-------
+ofxSequencer::~ofxSequencer() {
+    stop();
+    setVisible(false);  // clean up mouse listeners
+}

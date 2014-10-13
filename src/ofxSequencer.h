@@ -13,6 +13,7 @@ public:
     void setSize(int rows, int cols);
     void setBpm(int beatsPerMinute, int beatsPerBar=4);
     void setDiscrete(bool discrete);
+    void setRange(float minValue, float maxValue);
     
     void start();
     void stop();
@@ -52,7 +53,8 @@ private:
     int column;
     ofxBpm bpm;
     bool discrete;
-    
+    float minValue, maxValue;
+
     int rows, cols;
     int x, y, width, height;
     float cellWidth, cellHeight;

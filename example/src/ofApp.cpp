@@ -12,6 +12,9 @@ void ofApp::setup(){
     // set for continuous values (default is continuous)
     sequencer.setDiscrete(false);
     
+    // set value range (only for continuous sequencers)
+    sequencer.setRange(5.0, 10.0);
+    
     // where to draw it on the screen
     sequencer.setPosition(100, 100, 500, 200);
     
@@ -24,7 +27,7 @@ void ofApp::setup(){
     // set values
     for (int r=0; r<sequencer.getNumberRows(); r++) {
         for (int c=0; c<sequencer.getNumberColumns(); c++) {
-            sequencer.setValue(r, c, ofRandom(1));
+            sequencer.setValue(r, c, ofRandom(5, 10));
         }
     }
     

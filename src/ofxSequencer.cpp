@@ -3,10 +3,27 @@
 //-------
 void ofxSequencer::setup(int rows, int cols, bool discrete, int beatsPerMinute, int beatsPerBar) {
     setSize(rows, cols);
-    setBpm(beatsPerMinute, beatsPerBar);
+    setRange(0.0, 1.0);
     setDiscrete(discrete);
+    setBpm(beatsPerMinute, beatsPerBar);
     setVisible(true);
     setPosition(0, 0, 120, 40);
+}
+
+//-------
+void ofxSequencer::setSize(int rows, int cols) {
+    this->rows = rows;
+    this->cols = cols;
+    value.clear();
+    for (int c=0; c<cols; c++) {
+        vector<float> colValues;
+        value.push_back(colValues);
+        for (int r=0; r<rows; r++) {
+            value[c].push_back(0.0);
+        }
+    }
+    column = 0;
+    redraw();
 }
 
 //-------
@@ -15,7 +32,7 @@ void ofxSequencer::setDiscrete(bool discrete) {
     if (discrete) {
         for (int r=0; r<rows; r++) {
             for (int c=0; c<cols; c++) {
-                if (value[c][r] > 0.5) {
+                if (value[c][r] > 0.5 * (minValue+maxValue)) {
                     value[c][r] = 1.0;
                 }
                 else {
@@ -23,7 +40,10 @@ void ofxSequencer::setDiscrete(bool discrete) {
                 }
             }
         }
+        minValue = 0.0;
+        maxValue = 1.0;
     }
+    redraw();
 }
 
 //-------
@@ -50,23 +70,15 @@ void ofxSequencer::reset() {
 }
 
 //-------
-void ofxSequencer::setSize(int rows, int cols) {
-    this->rows = rows;
-    this->cols = cols;
-    value.clear();
-    for (int c=0; c<cols; c++) {
-        vector<float> colValues;
-        value.push_back(colValues);
-        for (int r=0; r<rows; r++) {
-            value[c].push_back(0.0);
-        }
-    }
-    column = 0;
+void ofxSequencer::setRange(float minValue, float maxValue) {
+    this->minValue = minValue;
+    this->maxValue = maxValue;
+    redraw();
 }
 
 //-------
 void ofxSequencer::setValue(int row, int col, float val) {
-    value[col][row] = discrete ? (val > 0.0) : val;
+    value[col][row] = discrete ? (val > 0.5) : val;
     redraw();
 }
 
@@ -164,7 +176,7 @@ void ofxSequencer::mousePressed(ofMouseEventArgs &evt){
 void ofxSequencer::mouseDragged(ofMouseEventArgs &evt){
     if (discrete)   return;
     if (draggingCell) {
-        value[activeCell.x][activeCell.y] = ofClamp(value[activeCell.x][activeCell.y] - 0.005*(evt.y-mousePos.y), 0.0, 1.0);
+        value[activeCell.x][activeCell.y] = ofClamp(value[activeCell.x][activeCell.y] - 0.005 * (maxValue - minValue) * (evt.y-mousePos.y), minValue, maxValue);
         mousePos.set(evt.x, evt.y);
         draggingFrames++;
         redraw();
@@ -178,11 +190,11 @@ void ofxSequencer::mouseReleased(ofMouseEventArgs &evt){
             value[activeCell.x][activeCell.y] = 1.0 - value[activeCell.x][activeCell.y];
         }
         else {
-            if (value[activeCell.x][activeCell.y] > 0.5) {
-                value[activeCell.x][activeCell.y] = 0.0;
+            if (value[activeCell.x][activeCell.y] > 0.5 * (minValue + maxValue)) {
+                value[activeCell.x][activeCell.y] = minValue;
             }
             else {
-                value[activeCell.x][activeCell.y] = 1.0;
+                value[activeCell.x][activeCell.y] = maxValue;
             }
         }
     }
@@ -197,6 +209,7 @@ void ofxSequencer::mouseReleased(ofMouseEventArgs &evt){
 void ofxSequencer::redraw() {
     cellWidth = (float) width / cols;
     cellHeight = (float) height / rows;
+    float rectMult = 1.0 / (maxValue - minValue);
     
     fbo.begin();
     
@@ -212,7 +225,9 @@ void ofxSequencer::redraw() {
     for (int r=0; r<rows; r++) {
         for (int c=0; c<cols; c++) {
             ofSetColor(0, 255, 0);
-            ofRect(0, 0, cellWidth * value[c][r], cellHeight * value[c][r]);
+            ofRect(0, 0,
+                   cellWidth  * rectMult * (value[c][r] - minValue),
+                   cellHeight * rectMult * (value[c][r] - minValue));
             ofTranslate(cellWidth, 0);
         }
         ofTranslate(-cols*cellWidth, cellHeight);

@@ -71,6 +71,15 @@ void ofxSequencer::reset() {
 }
 
 //-------
+void ofxSequencer::randomize() {
+    for (int r=0; r<rows; r++) {
+        for (int c=0; c<cols; c++) {
+            setValue(r, c, ofRandom(1));
+        }
+    }
+}
+
+//-------
 void ofxSequencer::setRange(float minValue, float maxValue) {
     this->minValue = minValue;
     this->maxValue = maxValue;

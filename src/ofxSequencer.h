@@ -18,6 +18,7 @@ public:
     void start();
     void stop();
     void reset();
+    void randomize();
     
     void draw();
     
@@ -31,6 +32,7 @@ public:
 
     void setValue(int row, int col, float val);
     
+    int getColumn() {return column;}
     float getValue(int row, int col) {return value[col][row];}
     vector<float> getRow(int row);
     vector<float> getColumn(int col);
@@ -38,6 +40,11 @@ public:
     template<typename ListenerClass, typename ListenerMethod>
     void addBeatListener(ListenerClass *listener, ListenerMethod method) {
         ofAddListener(sequencerEvent, listener, method);
+    }
+    template<typename ListenerClass, typename ListenerMethod>
+    void removeBeatListener(ListenerClass *listener, ListenerMethod method) {
+        ofRemoveListener(sequencerEvent, listener, method);
+        
     }
     
 private:

@@ -108,6 +108,11 @@ vector<float> ofxSequencer::getColumn(int col) {
 
 //-------
 void ofxSequencer::play(void) {
+    advance();
+}
+
+//-------
+void ofxSequencer::advance() {
     column = (column + 1) % cols;
     ofNotifyEvent(sequencerEvent, value[column], this);
 }
@@ -133,7 +138,7 @@ void ofxSequencer::draw() {
     ofPushStyle();
     
     ofTranslate(x, y);
-    
+    ofSetColor(255);
     fbo.draw(0, 0, width, height);
     
     ofSetRectMode(OF_RECTMODE_CORNER);
@@ -217,7 +222,7 @@ void ofxSequencer::mouseReleased(ofMouseEventArgs &evt){
 
 //-------
 void ofxSequencer::redraw() {
-    cellWidth = (float) width / cols;
+    cellWidth  = (float) width  / cols;
     cellHeight = (float) height / rows;
     float rectMult = 1.0 / (maxValue - minValue);
     
@@ -228,13 +233,13 @@ void ofxSequencer::redraw() {
     
     ofSetColor(0);
     ofFill();
-    ofRect(0, 0, width, height);
+    ofRect(0, 0, width+120, height);
     
     ofSetRectMode(OF_RECTMODE_CENTER);
     ofTranslate(0.5*cellWidth, 0.5*cellHeight);
     for (int r=0; r<rows; r++) {
+        ofSetColor(255);
         for (int c=0; c<cols; c++) {
-            ofSetColor(0, 255, 0);
             ofRect(0, 0,
                    cellWidth  * rectMult * (value[c][r] - minValue),
                    cellHeight * rectMult * (value[c][r] - minValue));
@@ -244,8 +249,8 @@ void ofxSequencer::redraw() {
     }
     ofTranslate(-0.5*cellWidth, (-0.5-rows)*cellHeight);
     
-    ofSetColor(255);
-    ofSetLineWidth(2);
+    ofSetColor(100);
+    ofSetLineWidth(1);
     for (int r=1; r<rows; r++) {
         ofLine(0, r*cellHeight, width, r*cellHeight);
     }

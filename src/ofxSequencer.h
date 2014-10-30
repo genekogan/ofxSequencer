@@ -16,6 +16,7 @@ public:
     void setRange(float minValue, float maxValue);
     
     void start();
+    void advance();
     void stop();
     void reset();
     void randomize();
@@ -37,6 +38,7 @@ public:
     vector<float> getRow(int row);
     vector<float> getColumn(int col);
     
+    /*
     template<typename ListenerClass, typename ListenerMethod>
     void addBeatListener(ListenerClass *listener, ListenerMethod method) {
         ofAddListener(sequencerEvent, listener, method);
@@ -44,10 +46,13 @@ public:
     template<typename ListenerClass, typename ListenerMethod>
     void removeBeatListener(ListenerClass *listener, ListenerMethod method) {
         ofRemoveListener(sequencerEvent, listener, method);
-        
     }
+     */
+    ofEvent<vector<float> > sequencerEvent;
+    
     
 private:
+    
     void play(void);
     void redraw();
     
@@ -55,7 +60,6 @@ private:
     void mouseDragged(ofMouseEventArgs &evt);
     void mouseReleased(ofMouseEventArgs &evt);
     
-    ofEvent<vector<float> > sequencerEvent;
     vector<vector<float> > value;
     int column;
     ofxBpm bpm;

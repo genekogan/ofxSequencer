@@ -38,16 +38,6 @@ public:
     vector<float> getRow(int row);
     vector<float> getColumn(int col);
     
-    /*
-    template<typename ListenerClass, typename ListenerMethod>
-    void addBeatListener(ListenerClass *listener, ListenerMethod method) {
-        ofAddListener(sequencerEvent, listener, method);
-    }
-    template<typename ListenerClass, typename ListenerMethod>
-    void removeBeatListener(ListenerClass *listener, ListenerMethod method) {
-        ofRemoveListener(sequencerEvent, listener, method);
-    }
-     */
     ofEvent<vector<float> > sequencerEvent;
     
     

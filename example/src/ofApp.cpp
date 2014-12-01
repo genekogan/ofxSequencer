@@ -19,7 +19,7 @@ void ofApp::setup(){
     sequencer.setPosition(100, 100, 500, 200);
     
     // event notifier
-    sequencer.addBeatListener(this, &ofApp::sequencerStep);
+    ofAddListener(sequencer.sequencerEvent, this, &ofApp::sequencerStep);
     
     // start the sequencer
     sequencer.start();

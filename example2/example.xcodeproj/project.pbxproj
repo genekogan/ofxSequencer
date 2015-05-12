@@ -9,43 +9,6 @@
 		<string>46</string>
 		<key>objects</key>
 		<dict>
-			<key>6A383215D7477F02243F1095</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxSequencerBpm.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxSequencer/src/ofxSequencerBpm.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>32DC5EEE16C5761621E7AB13</key>
-			<dict>
-				<key>fileRef</key>
-				<string>6F12AA43B56F06791D196169</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>6F12AA43B56F06791D196169</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxSequencerBpm.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxSequencer/src/ofxSequencerBpm.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
 			<key>ECF8A4C3B301F5CA5891B9FE</key>
 			<dict>
 				<key>explicitFileType</key>
@@ -67,8 +30,6 @@
 				<array>
 					<string>8BCEFD6C4AA7906CDC41A4D1</string>
 					<string>ECF8A4C3B301F5CA5891B9FE</string>
-					<string>6F12AA43B56F06791D196169</string>
-					<string>6A383215D7477F02243F1095</string>
 				</array>
 				<key>isa</key>
 				<string>PBXGroup</string>
@@ -112,10 +73,75 @@
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
+			<key>05FE614F54BA67EC9FB20F8E</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxBpm.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxBpm/src/ofxBpm.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>D755EACBA7FDC3E3E4D4FCD1</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>460B19B117B00B0147A6C03F</string>
+					<string>05FE614F54BA67EC9FB20F8E</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>71409468221D6EEFD169E428</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>D755EACBA7FDC3E3E4D4FCD1</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>ofxBpm</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>A33DD6A0C32BD4521F4A1E2D</key>
+			<dict>
+				<key>fileRef</key>
+				<string>460B19B117B00B0147A6C03F</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>460B19B117B00B0147A6C03F</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxBpm.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxBpm/src/ofxBpm.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
 			<key>BB4B014C10F69532006C3DED</key>
 			<dict>
 				<key>children</key>
 				<array>
+					<string>71409468221D6EEFD169E428</string>
 					<string>9AF8D9D955774E8278A34CC7</string>
 				</array>
 				<key>isa</key>
@@ -503,6 +529,8 @@
 					<key>HEADER_SEARCH_PATHS</key>
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
+						<string>../../../addons/ofxBpm/libs</string>
+						<string>../../../addons/ofxBpm/src</string>
 						<string>../../../addons/ofxSequencer/libs</string>
 						<string>../../../addons/ofxSequencer/src</string>
 					</array>
@@ -563,6 +591,8 @@
 					<key>HEADER_SEARCH_PATHS</key>
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
+						<string>../../../addons/ofxBpm/libs</string>
+						<string>../../../addons/ofxBpm/src</string>
 						<string>../../../addons/ofxSequencer/libs</string>
 						<string>../../../addons/ofxSequencer/src</string>
 					</array>
@@ -624,8 +654,8 @@
 				<array>
 					<string>E4B69E200A3A1BDC003C02F2</string>
 					<string>E4B69E210A3A1BDC003C02F2</string>
+					<string>A33DD6A0C32BD4521F4A1E2D</string>
 					<string>F385A2F89A69672B8678C9AC</string>
-					<string>32DC5EEE16C5761621E7AB13</string>
 				</array>
 				<key>isa</key>
 				<string>PBXSourcesBuildPhase</string>

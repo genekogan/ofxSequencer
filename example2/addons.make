@@ -1,1 +1,2 @@
+ofxBpm
 ofxSequencer

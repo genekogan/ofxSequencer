@@ -19,6 +19,8 @@ void ofApp::setup(){
     sequencer.setSmooth(true);
     
     sequencer.start();
+    
+    sequencer.setPosition(0, 0, 500, 200);
 }
 
 //--------------------------------------------------------------

@@ -6,6 +6,11 @@ ofxSequencerRowBase::ofxSequencerRowBase(int cols)
     this->cols = cols;
 }
 
+ofxSequencer::ofxSequencer()
+{
+    toRedraw = true;
+}
+
 ofxSequencer::~ofxSequencer()
 {
     stop();
@@ -50,7 +55,7 @@ void ofxSequencer::randomize()
     for (int r=0; r<rows.size(); r++) {
         rows[r]->randomize();
     }
-    redraw();
+    toRedraw = true;
 }
 
 void ofxSequencer::play(void)
@@ -112,7 +117,7 @@ void ofxSequencer::mouseDragged(ofMouseEventArgs &evt)
     {
         rows[mCell.y]->mouseDragged(mCell.x, ofGetMouseY());
         draggingFrames++;
-        redraw();
+        toRedraw = true;
     }
 }
 
@@ -125,7 +130,7 @@ void ofxSequencer::mouseReleased(ofMouseEventArgs &evt)
         draggingFrames = 0;
     }
     draggingCell = false;
-    redraw();
+    toRedraw = true;
 }
 
 void ofxSequencer::setPosition(int x, int y, int width, int height)
@@ -138,7 +143,7 @@ void ofxSequencer::setPosition(int x, int y, int width, int height)
     fbo.begin();
     ofClear(0, 0);
     fbo.end();
-    redraw();
+    toRedraw = true;
 }
 
 void ofxSequencer::update()
@@ -154,6 +159,11 @@ void ofxSequencer::update()
 
 void ofxSequencer::draw()
 {
+    if (toRedraw) {
+        redraw();
+        toRedraw = false;
+    }
+    
     ofPushMatrix();
     ofPushStyle();
     
@@ -169,14 +179,14 @@ void ofxSequencer::draw()
     {
         float t = cursor - floor(cursor);
         ofSetColor(255, 0, 0, 255 * (1 - t));
-        ofRect(cellWidth * column, 0, cellWidth, height);
+        ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
         ofSetColor(255, 0, 0, 255 * t);
-        ofRect(cellWidth * ((column + 1) % cols), 0, cellWidth, height);
+        ofDrawRectangle(cellWidth * ((column + 1) % cols), 0, cellWidth, height);
     }
     else
     {
         ofSetColor(255, 0, 0);
-        ofRect(cellWidth * column, 0, cellWidth, height);
+        ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
     }
     
     ofPopStyle();
@@ -195,7 +205,7 @@ void ofxSequencer::redraw()
     
     ofSetColor(0);
     ofFill();
-    ofRect(0, 0, width + 120, height);
+    ofDrawRectangle(0, 0, width + 120, height);
     ofSetColor(255);
 
     ofSetRectMode(OF_RECTMODE_CENTER);
@@ -217,10 +227,10 @@ void ofxSequencer::redraw()
     ofSetColor(100);
     ofSetLineWidth(1);
     for (int r=1; r<rows.size(); r++) {
-        ofLine(0, r * cellHeight, width, r * cellHeight);
+        ofDrawLine(0, r * cellHeight, width, r * cellHeight);
     }
     for (int c=1; c<cols; c++) {
-        ofLine(c * cellWidth, 0, c * cellWidth, height);
+        ofDrawLine(c * cellWidth, 0, c * cellWidth, height);
     }
     
     ofPopStyle();

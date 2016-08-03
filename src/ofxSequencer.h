@@ -12,6 +12,8 @@ struct ofxSequencerRowBase
     template<class T> T getMin();
     template<class T> T getMax();
     
+    template<class T> void setValue(int idx, T value);
+    
     virtual void update(int column) { }
     virtual void update(float cursor) { }
     virtual void randomize() { }
@@ -34,7 +36,8 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     string getName() {return parameter->getName();}
     T getMin() {return parameter->getMin();}
     T getMax() {return parameter->getMax();}
-
+    void setValue(int idx, T value) {values[idx] = value;}
+    
     void update(int column);
     void update(float cursor);
     void randomize();
@@ -110,7 +113,7 @@ template<class T>
 void ofxSequencerRow<T>::draw(int col, int cellWidth, int cellHeight)
 {
     float rectMult = 1.0 / (parameter->getMax() - parameter->getMin());
-    ofRect(0, 0,
+    ofDrawRectangle(0, 0,
            cellWidth  * rectMult * (values[col] - parameter->getMin()),
            cellHeight * rectMult * (values[col] - parameter->getMin()));
 }
@@ -119,7 +122,7 @@ template<>
 inline void ofxSequencerRow<bool>::draw(int col, int cellWidth, int cellHeight)
 {
     if (values[col]) {
-        ofRect(0, 0, cellWidth, cellHeight);
+        ofDrawRectangle(0, 0, cellWidth, cellHeight);
     }
 }
 
@@ -148,6 +151,7 @@ template<class T> T ofxSequencerRowBase::getMax() { return dynamic_cast<ofxSeque
 class ofxSequencer
 {
 public:
+    ofxSequencer();
     ~ofxSequencer();
     
     void setup(int cols, int beatsPerMinute=120, int beatsPerBar=4);
@@ -156,7 +160,6 @@ public:
     
     int getBpm() {return beatsPerMinute;}
     bool getSmooth() {return smooth;}
-    
     
     template<class T>
     void addRow(ofParameter<T> * parameter);
@@ -174,6 +177,12 @@ public:
     void setVisible(bool visible);
     void toggleVisible();
     void setMouseActive(bool active);
+    
+    template<class T>
+    void setValue(int r, int c, T value) {
+        ((ofxSequencerRow<T>*) rows[r])->setValue(c, value);
+        toRedraw = true;
+    }
     
     int getColumn() {return column;}
     vector<ofxSequencerRowBase*> & getRows() {return rows;}
@@ -208,6 +217,7 @@ private:
     int draggingFrames;
     
     ofFbo fbo;
+    bool toRedraw;
 };
 
 
@@ -216,5 +226,5 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
 {
     ofxSequencerRow<T> *newRow = new ofxSequencerRow<T>(parameter, cols);
     rows.push_back(newRow);
-    redraw();
+    toRedraw = true;
 }

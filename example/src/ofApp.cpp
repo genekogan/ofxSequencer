@@ -34,13 +34,18 @@ void ofApp::draw(){
     
     p4 ? ofSetColor(255, 0, 0) : ofSetColor(255);
     
-    ofCircle(ofMap(p1, p1.getMin(), p1.getMax(), 0, ofGetWidth()), 600, 50);
-    ofCircle(ofMap(p2, p2.getMin(), p2.getMax(), 0, ofGetWidth()), 700, 50);
+    ofDrawCircle(ofMap(p1, p1.getMin(), p1.getMax(), 0, ofGetWidth()), 600, 50);
+    ofDrawCircle(ofMap(p2, p2.getMin(), p2.getMax(), 0, ofGetWidth()), 700, 50);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if (key==' ') {
+        // set row 0, column 1 to random number
+        sequencer.setValue<float>(0, 1, ofRandom(1));
+        // set row 2, column 3 to random integer (since p3 is an int)
+        sequencer.setValue<int>(2, 3, int(ofRandom(4)));
+    }
 }
 
 //--------------------------------------------------------------

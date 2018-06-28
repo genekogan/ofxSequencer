@@ -8,7 +8,7 @@ struct ofxSequencerRowBase
 {
     ofxSequencerRowBase(int cols);
     
-    virtual string getName() { }
+    virtual string getName() { string name; return name; }
     template<class T> T getMin();
     template<class T> T getMax();
     

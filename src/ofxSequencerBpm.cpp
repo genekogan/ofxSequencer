@@ -17,7 +17,8 @@ void ofxSequencerBpm::start()
     stop();
     _isPlaying = true;
     reset();
-    startThread(true, false);   // blocking, verbose
+    //startThread(true, false);   // blocking, verbose
+    startThread();
 }
 
 void ofxSequencerBpm::stop()

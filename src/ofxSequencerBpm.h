@@ -7,12 +7,12 @@
 class ofxSequencerBpm : private ofThread
 {
 public:
-    static const float OFX_BPM_MAX;
-    static const float  OFX_BPM_DEFAULT;
-    static const float OFX_BPM_MIN;
-    static const int OFX_BPM_TICK;
+    const float OFX_BPM_MAX = 300.0;
+    const float  OFX_BPM_DEFAULT = 120.0;
+    const float OFX_BPM_MIN = 1.;
+    const int OFX_BPM_TICK = 960;
     
-    explicit ofxSequencerBpm(float bpm = OFX_BPM_DEFAULT,int beatPerBar = 4);
+    explicit ofxSequencerBpm(float bpm = 120.0, int beatPerBar = 4);
     
     void start();
     void stop();
@@ -45,7 +45,8 @@ private:
 };
 
 //init
-const float ofxSequencerBpm::OFX_BPM_MAX = 300. ;
-const float ofxSequencerBpm::OFX_BPM_DEFAULT = 120.;
-const float ofxSequencerBpm::OFX_BPM_MIN = 1.;
-const int ofxSequencerBpm::OFX_BPM_TICK = 960;
+//const float ofxSequencerBpm::OFX_BPM_MAX = 300. ;
+//const float ofxSequencerBpm::OFX_BPM_DEFAULT = 120.;
+//const float ofxSequencerBpm::OFX_BPM_MIN = 1.;
+//const int ofxSequencerBpm::OFX_BPM_TICK = 960;
+
